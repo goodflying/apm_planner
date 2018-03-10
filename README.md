@@ -31,7 +31,8 @@ To build on Mac OS X (10.6 or later):
 Install QT
 -----------
 1) Download Qt 5.4.2 or greater (Does not work with Qt4.x)
-   - you can verify the version by typing 'qmake -v' and it should report Qt 5.4.2 or greater as the version. 
+   - you can verify the version by typing 'qmake -v' and it should report Qt 5.4.2 or greater as the version.
+   - NOTE: Tested with Qt5.9.3 wth success
 
 2) Double click the package installer
 
@@ -48,7 +49,7 @@ Linux
 =====
 
 Building on Linux (tested against Ubuntu 14.04 LTS):
-(Needs update to use Qt5.4.2, 5.2.1 doesn't work anymore)
+(Use Qt5.4.2+ suggested Qt5.9.3)
 
 (**NOTE:** There is an error in 14.04LTS with libxcb crashing sometimes, try this [fix](https://gist.github.com/slimsag/a26d838ccc4480ce21bc))
 
@@ -126,6 +127,41 @@ cd ~/workspace/apm_planner
 sudo make install
 ```
 This will place the binary in your /bin/ folder and corresponding files in /share/
+
+
+OpenBSD
+========
+
+To build on OpenBSD 6.2
+-------------------
+1) install dependencies
+
+```
+pkg_add qt5 libsndfile sdl sdl2 flite py-serial py-pexpect openssl git
+```
+
+2) Clone the apm_planner repo
+
+```
+git clone git@github.com:ArduPilot/apm_planner.git
+```
+
+3) Build the project
+
+```
+cd apm_planner
+```
+
+```
+qmake-qt5 apm_planner.pro
+```
+
+```
+make
+```
+
+If the project compiled without errors you will find the binary in ./release
+
 
 Windows
 =======

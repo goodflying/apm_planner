@@ -89,6 +89,13 @@ linux-g++-64 | linux-g++ {
 } else : macx-clang | macx-g++ {
     message(Mac build)
     CONFIG += MacBuild
+} else : openbsd-clang | openbsd-g++ {
+    message(OpenBSD build)
+
+    DEFINES += Q_OPENBSD
+
+    CONFIG += OpenBSDBuild
+
 } else {
     error(Unsupported build type)
 }
@@ -175,7 +182,7 @@ MacBuild {
     CONFIG += x86_64
     CONFIG -= x86
     CONFIG += c++11 #C++11 support
-    QMAKE_MAC_SDK = macosx10.12 # Required for Xcode7.0
+#    QMAKE_MAC_SDK = macosx10.13 # Required for build using Qt5.6.2 on High Sierra
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
     ICON = $$BASEDIR/files/APMIcons/icon.icns
     QMAKE_INFO_PLIST = APMPlanner.plist   # Sets the pretty name for the build
@@ -187,6 +194,22 @@ MacBuild {
 #    LIBS += -lssl -lcrypto
 #    LIBS +=
     LIBS += -framework ApplicationServices
+}
+
+
+OpenBSDBuild {
+
+    CONFIG += c++11 #C++11 support
+    DEFINES += __STDC_LIMIT_MACROS
+#    DEFINES += UDPLINK_DEBUG
+
+    DEFINES += GIT_COMMIT=$$system(git describe --dirty=-DEV --always)
+    DEFINES += GIT_HASH=$$system(git log -n 1 --pretty=format:%H)
+
+#    LIBS += -lsndfile
+    LIBS += -lz
+    LIBS += -lssl -lcrypto
+    DEFINES += OPENSSL
 }
 
 LinuxBuild {
